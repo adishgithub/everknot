@@ -49,6 +49,7 @@ export function PriceCalculator({ product, qty, setQty, addons, colour, size }) 
       <dt>Designing charge (per order)</dt><dd>{inr(c.design)}</dd>
       {c.addonLines.map((a) => <div key={a.name} className="row"><dt>{a.name}</dt><dd>{inr(a.total)}</dd></div>)}
       <dt className="tot">Estimated total, excluding shipping</dt><dd className="tot">{inr(c.total)}</dd></dl>}
+    {c.fallback && <p className="notice">No bulk price is listed for this quantity, so the standard rate of {inr(c.rate)} per card is applied. EverKnot will confirm the final price.</p>}
     <p className="muted small">Shipping depends on package weight and destination, so it is confirmed on WhatsApp. Cash on delivery is not available.</p>
     <details className="preview" open><summary>Message that will be sent to EverKnot</summary>
       <pre>{orderText(product, { qty, colour, size, addons }, c)}</pre></details>

@@ -6,11 +6,14 @@ export const tierLabel = (t) => (t.max == null ? `Above ${(t.min - 1).toLocaleSt
 export function calculate(product, qty, addons = []) {
   const min = product.minQuantity || config.minQuantity
   if (!Number.isInteger(qty) || qty < min) return { error: `Minimum order is ${min} cards.` }
-  const tier = rateFor(product.tiers, qty)
-  if (!tier) return { error: 'We have no listed price for this quantity. Please send an enquiry on WhatsApp for a quote.', enquiry: true }
+  let tier = rateFor(product.tiers, qty)
+  // No price listed for this quantity: apply the lowest-quantity (first) rate, and flag it so the customer and admin can see.
+  const fallback = !tier && product.tiers?.length > 0
+  if (fallback) tier = product.tiers[0]
+  if (!tier) return { error: 'No prices are listed for this design yet. Please send an enquiry on WhatsApp for a quote.', enquiry: true }
   const printing = qty * tier.price
   const design = product.designCharge ?? config.designChargeDefault
   const addonLines = addons.map((a) => ({ ...a, total: a.unit === 'card' ? a.charge * qty : a.charge }))
   const addonTotal = addonLines.reduce((s, a) => s + a.total, 0)
-  return { rate: tier.price, printing, design, addonLines, total: printing + design + addonTotal }
+  return { rate: tier.price, fallback, printing, design, addonLines, total: printing + design + addonTotal }
 }
