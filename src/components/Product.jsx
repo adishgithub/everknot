@@ -4,6 +4,8 @@ import { config } from '../config'
 import { inr, calculate, startingPrice, tierLabel } from '../lib/pricing'
 import { orderUrl, enquiryUrl } from '../lib/whatsapp'
 
+const FALLBACK = 'data:image/svg+xml;utf8,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 750"><rect width="600" height="750" fill="#F7E7EC"/><text x="300" y="380" font-family="Georgia,serif" font-size="28" text-anchor="middle" fill="#A88652">Photo coming soon</text></svg>')
+const onImgError = (e) => { e.currentTarget.onerror = null; e.currentTarget.src = FALLBACK }
 export function ProductGallery({ images }) {
   const [i, setI] = useState(0)
   const x0 = useRef(null)
@@ -12,7 +14,7 @@ export function ProductGallery({ images }) {
   return (
     <figure className="gallery" onTouchStart={(e) => (x0.current = e.touches[0].clientX)}
       onTouchEnd={(e) => { const d = e.changedTouches[0].clientX - x0.current; if (Math.abs(d) > 40) go(d < 0 ? 1 : -1) }}>
-      <img src={images[i].url} alt={images[i].caption || 'Invitation photo'} />
+      <img src={images[i].url} alt={images[i].caption || 'Invitation photo'} onError={onImgError} referrerPolicy="no-referrer" />
       {images.length > 1 && <>
         <button className="gnav l" onClick={() => go(-1)} aria-label="Previous photo"><ChevronLeft /></button>
         <button className="gnav r" onClick={() => go(1)} aria-label="Next photo"><ChevronRight /></button></>}
@@ -79,7 +81,7 @@ export function ProductDetails({ product, onClose }) {
 export function ProductCard({ product, onView }) {
   const from = startingPrice(product)
   return (<article className="card">
-    <img src={product.images[0]?.url} alt={product.images[0]?.caption || product.name} loading="lazy" />
+    <img src={product.images[0]?.url || FALLBACK} alt={product.images[0]?.caption || product.name} loading="lazy" onError={onImgError} referrerPolicy="no-referrer" />
     <div className="cbody"><span className="badge">{product.category}</span><h3>{product.name}</h3>
       <p className="muted small">{product.sizes.join(', ') || 'Size on request'}</p>
       <p className="price">{from ? <>From <b>{inr(from)}</b> per card</> : 'Price on enquiry'}</p>
