@@ -52,6 +52,7 @@ function buildCatalogue(values) {
       colours: splitList(cell(r, /^available colours?/)).concat(splitList(cell(r, /^other colour/))),
       tiers: tierCols.map((c) => ({ min: c.min, max: c.max, price: money(r[c.i]) })).filter((t) => t.price != null && t.price > 0),
       addons: addons,
+      bulkPrice: money(cell(r, /^price per card - bulk/)),   // used for any quantity that has no listed price
       images: photoNums.map((n) => ({ url: cell(r, new RegExp('^photo ' + n + ' - image url')), caption: cell(r, new RegExp('^photo ' + n + ' - caption')) })).filter((p) => p.url),
       status: cell(r, /^publication status/)
     };

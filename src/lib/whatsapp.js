@@ -16,7 +16,7 @@ export function orderText(p, o, c) {
     L.push(`Price per card: ${inr(c.rate)}`, `Printing cost: ${inr(c.printing)}`, `Designing charge: ${inr(c.design)}`)
     c.addonLines.forEach((a) => L.push(`Add-on: ${a.name} (${inr(a.charge)} ${a.unit === 'card' ? 'per card' : 'per order'}) = ${inr(a.total)}`))
     L.push(`Estimated total excluding shipping: ${inr(c.total)}`)
-    if (c.fallback) L.push('Note: No bulk rate is listed for this quantity, so the standard per-card rate was applied. Please confirm the final price.')
+    if (c.fallback) L.push('Note: The bulk price was applied for this quantity. Please confirm the final price.')
   } else {
     (o.addons || []).forEach((a) => L.push(`Add-on: ${a.name} (${inr(a.charge)} ${a.unit === 'card' ? 'per card' : 'per order'})`))
     L.push('Note: No online price is listed for this selection. Please send a quote.')

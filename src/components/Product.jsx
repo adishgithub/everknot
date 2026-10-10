@@ -49,7 +49,7 @@ export function PriceCalculator({ product, qty, setQty, addons, colour, size }) 
       <dt>Designing charge (per order)</dt><dd>{inr(c.design)}</dd>
       {c.addonLines.map((a) => <div key={a.name} className="row"><dt>{a.name}</dt><dd>{inr(a.total)}</dd></div>)}
       <dt className="tot">Estimated total, excluding shipping</dt><dd className="tot">{inr(c.total)}</dd></dl>}
-    {c.fallback && <p className="notice">No bulk price is listed for this quantity, so the standard rate of {inr(c.rate)} per card is applied. EverKnot will confirm the final price.</p>}
+    {c.fallback && <p className="notice">The bulk price of {inr(c.rate)} per card applies to this quantity. EverKnot will confirm the final price.</p>}
     <p className="muted small">Shipping depends on package weight and destination, so it is confirmed on WhatsApp. Cash on delivery is not available.</p>
     <details className="preview" open><summary>Message that will be sent to EverKnot</summary>
       <pre>{orderText(product, { qty, colour, size, addons }, c)}</pre></details>
@@ -74,7 +74,7 @@ export function ProductDetails({ product, onClose }) {
       {product.sizes.length > 0 && <fieldset><legend>Size</legend><div className="chips">{product.sizes.map((s) => <button key={s} type="button" aria-pressed={size === s} className={'chip' + (size === s ? ' on' : '')} onClick={() => setSize(s)}>{s}</button>)}</div></fieldset>}
       <ColourSelector colours={product.colours} value={colour} onChange={setColour} />
       <h4>Price per card</h4>
-      {product.tiers.length ? <table className="tiers"><tbody>{product.tiers.map((t) => <tr key={t.min}><td>{tierLabel(t)} cards</td><td>{inr(t.price)}</td></tr>)}</tbody></table>
+      {product.tiers.length || product.bulkPrice != null ? <table className="tiers"><tbody>{product.tiers.map((t) => <tr key={t.min}><td>{tierLabel(t)} cards</td><td>{inr(t.price)}</td></tr>)}{product.bulkPrice != null && <tr><td>{product.tiers.length ? 'Other quantities (bulk price)' : 'All quantities (bulk price)'}</td><td>{inr(product.bulkPrice)}</td></tr>}</tbody></table>
         : <p className="muted">Prices for this design aren't listed yet. Please enquire on WhatsApp.</p>}
       <AddOnSelector addons={product.addons} selected={sel} onToggle={(n) => setSel((s) => (s.includes(n) ? s.filter((x) => x !== n) : [...s, n]))} />
       <PriceCalculator product={product} qty={qty} setQty={setQty} addons={addons} colour={colour} size={size} />

@@ -34,7 +34,7 @@ function clean(r, idx) {
     images: pics(r), tiers,
     addons: (Array.isArray(r.addons) ? r.addons : []).filter((a) => a?.name && num(a.charge) != null)
       .map((a) => ({ ...a, charge: Number(a.charge), unit: a.unit === 'card' ? 'card' : 'order' })),
-    minQuantity: num(r.minQuantity), designCharge: num(r.designCharge) }
+    bulkPrice: num(r.bulkPrice) > 0 ? num(r.bulkPrice) : null, minQuantity: num(r.minQuantity), designCharge: num(r.designCharge) }
 }
 export async function loadCatalogue() {
   if (!config.catalogueUrl) return { products: sampleProducts, sample: true }
