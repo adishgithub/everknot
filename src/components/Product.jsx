@@ -49,7 +49,7 @@ export function PriceCalculator({ product, qty, setQty, addons, colour, size }) 
       <dt>Designing charge (per order)</dt><dd>{inr(c.design)}</dd>
       {c.addonLines.map((a) => <div key={a.name} className="row"><dt>{a.name}</dt><dd>{inr(a.total)}</dd></div>)}
       <dt className="tot">Estimated total, excluding shipping</dt><dd className="tot">{inr(c.total)}</dd></dl>}
-    <p className="muted small">Shipping depends on package weight and destination, so it is confirmed on WhatsApp.</p>
+    <p className="muted small">Shipping depends on package weight and destination, so it is confirmed on WhatsApp. Cash on delivery is not available.</p>
     <details className="preview" open><summary>Message that will be sent to EverKnot</summary>
       <pre>{orderText(product, { qty, colour, size, addons }, c)}</pre></details>
     <p className="disclaimer"><b>Please note:</b> sending this message does not confirm your order. Your order is confirmed only after EverKnot confirms it with you on WhatsApp.</p>
@@ -69,7 +69,7 @@ export function ProductDetails({ product, onClose }) {
   return (<div className="overlay" onClick={onClose}><div className="modal" role="dialog" aria-modal="true" aria-label={product.name} onClick={(e) => e.stopPropagation()}>
     <button className="close" onClick={onClose} aria-label="Close details"><X /></button>
     <ProductGallery images={product.images} />
-    <div className="mbody"><span className="badge">{product.category}</span><h3>{product.name}</h3><p>{product.description}</p>
+    <div className="mbody">{product.category && <span className="badge">{product.category}</span>}<h3>{product.name}</h3>{product.description && <p>{product.description}</p>}
       {product.sizes.length > 0 && <fieldset><legend>Size</legend><div className="chips">{product.sizes.map((s) => <button key={s} type="button" aria-pressed={size === s} className={'chip' + (size === s ? ' on' : '')} onClick={() => setSize(s)}>{s}</button>)}</div></fieldset>}
       <ColourSelector colours={product.colours} value={colour} onChange={setColour} />
       <h4>Price per card</h4>
@@ -84,7 +84,7 @@ export function ProductCard({ product, onView }) {
   const from = startingPrice(product)
   return (<article className="card">
     <img src={product.images[0]?.url || FALLBACK} alt={product.images[0]?.caption || product.name} loading="lazy" onError={onImgError} referrerPolicy="no-referrer" />
-    <div className="cbody"><span className="badge">{product.category}</span><h3>{product.name}</h3>
+    <div className="cbody">{product.category && <span className="badge">{product.category}</span>}<h3>{product.name}</h3>
       <p className="muted small">{product.sizes.join(', ') || 'Size on request'}</p>
       <p className="price">{from ? <>From <b>{inr(from)}</b> per card</> : 'Price on enquiry'}</p>
       <div className="dots" aria-label={'Colours: ' + product.colours.join(', ')}>{product.colours.map((c) => <span key={c} className="muted small">{c}</span>)}</div>

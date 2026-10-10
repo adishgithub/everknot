@@ -16,7 +16,7 @@ a{color:inherit}img{max-width:100%;display:block}.sr{position:absolute;width:1px
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:.4rem;min-height:44px;padding:.6rem 1.1rem;border:1px solid var(--gold);background:#fff;color:var(--teal);font:500 .95rem Inter,sans-serif;text-decoration:none;cursor:pointer;border-radius:2px}
 .btn.pri{background:var(--teal);border-color:var(--teal);color:#fff}.btn.wa{background:var(--pink);border-color:var(--pink);color:#fff}.btn.disabled{opacity:.6;cursor:not-allowed}
 .hero{display:grid;gap:1.5rem;padding:2rem 1.2rem;background:var(--ivory);text-align:center;justify-items:center}
-.herologo{width:min(300px,75vw);mix-blend-mode:multiply}.hero p{max-width:34rem;margin:.5rem auto 1.2rem;color:var(--muted)}
+.herologo{width:min(300px,75vw);background:#fff;border:1px solid var(--gold);padding:.6rem}.hero p{max-width:34rem;margin:.5rem auto 1.2rem;color:var(--muted)}
 .cta{display:flex;flex-direction:column;gap:.7rem}.cta.c{align-items:center}
 .sec{padding:3rem 1.2rem;max-width:1100px;margin:0 auto}.tint{background:var(--blush);max-width:none}.tint>*{max-width:1000px;margin-left:auto;margin-right:auto}
 .notice{background:var(--blush);border:1px dashed var(--gold);padding:.6rem .9rem;font-size:.875rem}
@@ -57,3 +57,18 @@ a{color:inherit}img{max-width:100%;display:block}.sr{position:absolute;width:1px
 .preview{border:1px solid var(--gold);background:#fff;padding:.5rem .8rem}.preview summary{cursor:pointer;font-weight:600;min-height:44px;display:flex;align-items:center;color:var(--teal)}
 .preview pre{white-space:pre-wrap;word-break:break-word;margin:0 0 .5rem;font:.85rem/1.5 Inter,sans-serif;max-height:240px;overflow-y:auto;color:var(--text)}
 .disclaimer{margin:0;padding:.7rem .9rem;background:var(--blush);border-left:3px solid var(--pink);font-size:.875rem}
+
+.pgrid .pcard:last-child{grid-column:1/-1}
+.about .lead{max-width:44rem;margin:0 auto 2rem;text-align:center;font-size:1.05rem}
+.mv,.vals{display:grid;gap:1rem;grid-template-columns:1fr}.mv{margin-bottom:2rem}
+.mv .pcard h3{font-size:1.6rem}.vals>div{padding:0 .5rem}.vals p{margin:0;color:var(--muted)}
+@media(min-width:700px){.mv{grid-template-columns:1fr 1fr}.vals{grid-template-columns:repeat(3,1fr)}}
+@media(min-width:900px) and (max-width:1100px){.nav a{padding:.5rem .5rem;font-size:.82rem}}
+@media(min-width:900px){
+.header{padding:.4rem max(2rem,calc((100% - 1100px)/2))}
+.hero{padding:4rem max(3rem,calc((100% - 1100px)/2));gap:3rem;justify-items:stretch}
+.hero .herologo{justify-self:center}
+.hero>div{max-width:32rem;justify-self:start}
+.hero h1{font-size:clamp(2.4rem,3.6vw,3.2rem)}
+.hero p{margin:.5rem 0 1.5rem;max-width:none}
+}

@@ -1,4 +1,4 @@
-import { Header, Hero, CatalogueSection, HowItWorks, PoliciesSection, Footer } from './components/Sections'
+import { Header, Hero, CatalogueSection, AboutSection, HowItWorks, PoliciesSection, Footer } from './components/Sections'
 export default function App() {
-  return (<><Header /><main><Hero /><CatalogueSection /><HowItWorks /><PoliciesSection /></main><Footer /></>)
+  return (<><Header /><main><Hero /><CatalogueSection /><AboutSection /><HowItWorks /><PoliciesSection /></main><Footer /></>)
 }

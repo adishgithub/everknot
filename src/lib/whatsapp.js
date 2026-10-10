@@ -10,7 +10,7 @@ export function orderText(p, o, c) {
   const qtyText = Number.isInteger(o.qty) ? `${o.qty} cards` : 'Not specified'
   const L = [`Hello ${config.businessName}!`, '',
     priced ? 'I would like to enquire about the following invitation:' : 'I would like a quote for the following invitation:', '',
-    `Product: ${p.name}`, p.id ? `Product ID: ${p.id}` : null, `Category: ${p.category}`,
+    `Product: ${p.name}`, p.id ? `Product ID: ${p.id}` : null, p.category ? `Category: ${p.category}` : null,
     o.size ? `Size: ${o.size}` : null, o.colour ? `Colour: ${o.colour}` : null, `Quantity: ${qtyText}`]
   if (priced) {
     L.push(`Price per card: ${inr(c.rate)}`, `Printing cost: ${inr(c.printing)}`, `Designing charge: ${inr(c.design)}`)
