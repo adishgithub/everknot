@@ -24,7 +24,10 @@ function clean(r, idx) {
   const name = String(r.name).trim()
   const cat = String(r.category || '').toLowerCase()
   const tiers = (Array.isArray(r.tiers) ? r.tiers : []).map((t) => ({ min: num(t.min), max: num(t.max), price: num(t.price) }))
-    .filter((t) => t.min != null && t.price != null && t.price > 0 && (t.max == null || t.max >= t.min)).sort((a, b) => a.min - b.min)
+    .filter((t) => t.min != null && t.price != null && t.price > 0 && (t.max == null || t.max >= t.min))
+    // keep the first of any overlapping ranges (in the order supplied), so a stray duplicate range can't win
+    .reduce((acc, t) => (acc.some((a) => t.min <= (a.max ?? Infinity) && (t.max ?? Infinity) >= a.min) ? acc : [...acc, t]), [])
+    .sort((a, b) => a.min - b.min)
   return { id: String(r.id || '').trim() || slug(name) || `item-${idx}`, name,
     category: cat.includes('premium') ? 'Premium' : cat.includes('budget') ? 'Budget Friendly' : '',
     sizes: toList(r.sizes ?? r.size), description: String(r.description || '').trim(), colours: toList(r.colours ?? r.colour),
