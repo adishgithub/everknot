@@ -2,10 +2,10 @@ import { useState, useRef, useEffect } from 'react'
 import { ChevronLeft, ChevronRight, X, MessageCircle } from 'lucide-react'
 import { config } from '../config'
 import { inr, calculate, startingPrice, tierLabel } from '../lib/pricing'
-import { orderUrl, enquiryUrl } from '../lib/whatsapp'
+import { orderUrl, orderText } from '../lib/whatsapp'
 
 const FALLBACK = 'data:image/svg+xml;utf8,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 750"><rect width="600" height="750" fill="#F7E7EC"/><text x="300" y="380" font-family="Georgia,serif" font-size="28" text-anchor="middle" fill="#A88652">Photo coming soon</text></svg>')
-const onImgError = (e) => { e.currentTarget.onerror = null; e.currentTarget.src = FALLBACK }
+const onImgError = (e) => { console.warn('EverKnot: image failed to load ->', e.currentTarget.src); e.currentTarget.onerror = null; e.currentTarget.src = FALLBACK }
 export function ProductGallery({ images }) {
   const [i, setI] = useState(0)
   const x0 = useRef(null)
@@ -50,8 +50,10 @@ export function PriceCalculator({ product, qty, setQty, addons, colour, size }) 
       {c.addonLines.map((a) => <div key={a.name} className="row"><dt>{a.name}</dt><dd>{inr(a.total)}</dd></div>)}
       <dt className="tot">Estimated total, excluding shipping</dt><dd className="tot">{inr(c.total)}</dd></dl>}
     <p className="muted small">Shipping depends on package weight and destination, so it is confirmed on WhatsApp.</p>
-    {c.error || !c.total ? <a className="btn wa" href={enquiryUrl()} target="_blank" rel="noopener noreferrer"><MessageCircle size={18} /> Enquire on WhatsApp</a>
-      : <a className="btn wa" href={orderUrl(product, { qty, colour, size }, c)} target="_blank" rel="noopener noreferrer"><MessageCircle size={18} /> Order on WhatsApp</a>}
+    <details className="preview" open><summary>Message that will be sent to EverKnot</summary>
+      <pre>{orderText(product, { qty, colour, size, addons }, c)}</pre></details>
+    <p className="disclaimer"><b>Please note:</b> sending this message does not confirm your order. Your order is confirmed only after EverKnot confirms it with you on WhatsApp.</p>
+    <a className="btn wa" href={orderUrl(product, { qty, colour, size, addons }, c)} target="_blank" rel="noopener noreferrer"><MessageCircle size={18} /> {c.error ? 'Enquire on WhatsApp' : 'Order on WhatsApp'}</a>
     <p className="muted small">Opening WhatsApp does not confirm an order. We confirm it with you in the chat.</p>
   </section>)
 }

@@ -7,5 +7,5 @@ export const config = {
   catalogueUrl: import.meta.env.VITE_CATALOGUE_URL || '', // Apps Script /exec URL. Empty = sample data.
   minQuantity: 25,
   designChargeDefault: 300,
-  prepDays: 10,
+  prepTime: '3–7 days',
 }

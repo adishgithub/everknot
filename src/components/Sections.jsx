@@ -55,7 +55,7 @@ export const HowItWorks = () => (<section id="how" className="sec tint"><h2>How 
 
 const pol = [[Package, 'Minimum Order', 'The minimum order quantity is 25 invitation cards.'], [Palette, 'Designing Charge', 'A designing charge of ₹300 applies per order.'],
   [FileText, 'PDF File', 'A PDF file of the card design will be provided.'], [Truck, 'Shipping Charges', 'Shipping charges will be determined by the weight of the package and the destination.'],
-  [Clock, 'Preparation Time', 'The standard preparation time is 10 days after the order has been confirmed. This does not include shipping time.'], [Video, 'Video Previews', 'Videos of our invitation cards are available on Instagram.']]
+  [Clock, 'Preparation Time', 'The standard preparation time is 3–7 days after the order has been confirmed. This does not include shipping time.'], [Video, 'Video Previews', 'Videos of our invitation cards are available on Instagram.']]
 export const PoliciesSection = () => (<section id="info" className="sec"><h2>Before You Place Your Order</h2>
   <div className="pgrid">{pol.map(([I, t, d]) => <div className="pcard" key={t}><I color="#A88652" /><h3>{t}</h3><p>{d}</p></div>)}</div><div className="center"><Insta /></div></section>)
 
@@ -63,6 +63,6 @@ export const Footer = () => (<><section id="contact" className="sec tint center"
   <div className="cta c"><WhatsAppButton>Chat on WhatsApp</WhatsAppButton><Insta /></div></section>
   <footer className="footer"><img src={config.logo} alt="" width="56" height="56" /><p>{config.businessName}</p>
     <nav aria-label="Footer">{links.map(([id, l]) => <a key={id} href={'#' + id}>{l}</a>)}</nav>
-    <p className="small">Minimum order 25 cards · Preparation {config.prepDays} days after confirmation</p>
+    <p className="small">Minimum order 25 cards · Preparation {config.prepTime} after confirmation</p>
     <p className="small">© {new Date().getFullYear()} {config.businessName}. All rights reserved.</p></footer>
   <a className="sticky" href={enquiryUrl()} target="_blank" rel="noopener noreferrer"><MessageCircle size={18} /> Enquire on WhatsApp</a></>)
