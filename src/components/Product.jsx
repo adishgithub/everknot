@@ -19,6 +19,9 @@ export function ProductGallery({ images }) {
         <button className="gnav l" onClick={() => go(-1)} aria-label="Previous photo"><ChevronLeft /></button>
         <button className="gnav r" onClick={() => go(1)} aria-label="Next photo"><ChevronRight /></button></>}
       <figcaption>{images[i].caption} {images.length > 1 && <span>({i + 1}/{images.length})</span>}</figcaption>
+      {images.length > 1 && <div className="thumbs">{images.map((im, k) => (
+        <button key={k} type="button" className={k === i ? 'on' : ''} onClick={() => setI(k)} aria-label={`Show photo ${k + 1}`} aria-current={k === i}>
+          <img src={im.url} alt="" onError={onImgError} referrerPolicy="no-referrer" /></button>))}</div>}
     </figure>)
 }
 
